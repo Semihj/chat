@@ -10,9 +10,8 @@ export default function Home() {
   const [roomId, setRoomId] = useState("");
   const router = useRouter();
 
-  const socket = io("http://localhost:5000");
   const createRoom = async () => {
-    const res = await fetch("http://localhost:5000/create", {
+    const res = await fetch("https://flask-chat-2.onrender.com//create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,18 +26,19 @@ export default function Home() {
     }
   };
   const joinRoom = async () => {
-    const res = await fetch(`http://localhost:5000/room/${roomId}`, {});
+    const res = await fetch(
+      `https://flask-chat-2.onrender.com/room/${roomId}`,
+      {}
+    );
     const data = await res.json();
     if (data.members.includes(name)) {
       alert("this name is already taken");
     } else {
-   
       router.push(`/rooms/${roomId}?name=${name}`);
     }
     console.log(data);
   };
 
-  
   return (
     <div className="flex flex-col gap-5 p-10 max-w-[500px] ">
       <div className="flex gap-2">
@@ -57,7 +57,7 @@ export default function Home() {
         </button>
       </div>
       <div className="flex flex-col gap-2">
-      <input
+        <input
           type="text"
           className="border p-2 w-full"
           placeholder="Name"

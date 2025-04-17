@@ -6,8 +6,11 @@ from string import ascii_uppercase
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "X9lnNZSd4Fbed7f"
-CORS(app, supports_credentials=True)
-socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000")
+allowed_origins = ["http://localhost:3000","https://chat-semih.vercel.app"]
+
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": allowed_origins}})
+socketio = SocketIO(app, cors_allowed_origins=allowed_origins, manage_session=False)
+
 
 rooms = {}
 user_sid_map = {}  # sid -> {"room": room, "name": name}
